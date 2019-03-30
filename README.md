@@ -1,6 +1,6 @@
-# multiple-file-renamer README
+# multiple-files-renamer README
 
-This is the README for your extension "multiple-file-renamer". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "multiple-files-renamer". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

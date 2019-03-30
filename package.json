@@ -1,6 +1,6 @@
 {
-	"name": "multiple-file-renamer",
-	"displayName": "Multiple File Renamer",
+	"name": "multiple-files-renamer",
+	"displayName": "Multiple Files Renamer",
 	"description": "Renames multiple files at once by replacing a substring of each filename using regex or matching a substring.",
 	"version": "0.0.1",
 	"engines": {
