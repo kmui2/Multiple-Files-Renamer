@@ -10,14 +10,23 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.renameFiles"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"menus": {
+				"explorer/context": [
+						{
+								"command": "extension.renameFiles",
+								"group": "1_modification",
+								"when": "explorerViewletVisible"
+						}
+				]
+		},
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.renameFiles",
+				"title": "Rename Files"
 			}
 		]
 	},

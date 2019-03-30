@@ -1,26 +1,68 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import * as path from "path";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  let disposable = vscode.commands.registerCommand(
+    "extension.renameFiles",
+    async (uri?: vscode.Uri, uris?: vscode.Uri[]) => {
+      if (uris) {
+        const replaceType = await vscode.window.showQuickPick([
+          "Substring",
+          "RegExp"
+        ]);
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-		console.log('Congratulations, your extension "multiple-file-renamer" is now active!');
+        let replaceRegExpSubstr: string | RegExp;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+        if (replaceType === "RegExp") {
+          const response = await vscode.window.showInputBox({
+            prompt: "Regex to find and replace..."
+          });
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
-	});
+          if (response === undefined) {
+            return;
+          }
+          replaceRegExpSubstr = response;
+        } else if (replaceType === "Substring") {
+          const response = await vscode.window.showInputBox({
+            prompt: "Substring/Regex to find and replace..."
+          });
 
-	context.subscriptions.push(disposable);
+          if (response === undefined) {
+            return;
+          }
+          replaceRegExpSubstr = new RegExp(response);
+        } else {
+          return;
+        }
+
+        console.log("replaceRegexSubstr:", replaceRegExpSubstr);
+        const replaceSubstr =
+          (await vscode.window.showInputBox({
+            prompt: "Substring to replace with..."
+          })) || "";
+        console.log("replaceSubstr:", replaceSubstr);
+
+        const we = new vscode.WorkspaceEdit();
+
+        uris.forEach(uri => {
+          const pathArray = uri.path.split(path.sep);
+          pathArray.pop();
+          const parentPath = path.join(...pathArray);
+          const basename = path.basename(uri.path);
+          const replacedBasename = basename.replace(
+            replaceRegExpSubstr,
+            replaceSubstr
+          );
+          const fullNewPath = path.join(parentPath, replacedBasename);
+          const newUri = vscode.Uri.parse(`file:${fullNewPath}`);
+          we.renameFile(uri, newUri, { overwrite: true });
+        });
+        vscode.workspace.applyEdit(we);
+      }
+    }
+  );
+
+  context.subscriptions.push(disposable);
 }
 
 // this method is called when your extension is deactivated
