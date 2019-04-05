@@ -2,6 +2,8 @@
 	"name": "multiple-files-renamer",
 	"displayName": "Multiple Files Renamer",
 	"description": "Renames multiple files at once by replacing a substring of each filename using regex or matching a substring.",
+	"publisher": "kmui2",
+	"repository": "https://github.com/kmui2/Multiple-Files-Renamer",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.32.0"
