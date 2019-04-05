@@ -1,7 +1,7 @@
 {
 	"name": "multiple-files-renamer",
 	"displayName": "Multiple Files Renamer",
-	"description": "Renames multiple files at once by replacing a substring of each filename using regex or matching a substring.",
+	"description": "Renames multiple files at once by replacing a substring of each filename using regex or matching a substring. To use this extension, hold CTRL/CMD and click on multiple files on the file explorer. Then right clicking on them will display an option to rename the files.",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.32.0"
